@@ -11,7 +11,7 @@ White faces have 2 attack and 1 HP.
 
 Black faces have 3 attack and 10 HP.
 
-Stand in Front of an enemy and press 'a' to attack.
+Stand in front of an enemy and press 'a' to attack.
 
 H, K and C are items, acquired by walking onto them.
 
@@ -25,7 +25,10 @@ C is Coin and used to make M go away.
 
 M is another kind of door, it only needs special keys, C, and 3 of them, to open.
 
+Defeat the Black face to progress to the next map.
 
 
 ## Disclaimer
 The code doesn't solve the exercise. It's also written poorly.
+
+Currently there are two maps.

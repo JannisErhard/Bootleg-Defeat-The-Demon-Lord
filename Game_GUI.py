@@ -507,6 +507,7 @@ def map_to_screen(map):
 def check_stage_progression():
     global HP_Demon_Lord, stage, first_map, attk , HP, defn
     if HP_Demon_Lord <= 0:
+        HP_Demon_Lord = 10
         stage += 1
         first_map = campaign[stage]
         attk = 1
@@ -515,34 +516,40 @@ def check_stage_progression():
 def turn_up_input(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '^',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def turn_left_input(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '<',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     print(Frame)
     gamewindow.configure(text=Frame)
 def turn_right_input(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '>',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     print(Frame)
     gamewindow.configure(text=Frame)
 def turn_down_input(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'v',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     print(Frame)
     gamewindow.configure(text=Frame)
 def Move(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'F',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Use_Key(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'K',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)
+    check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Attack(self):

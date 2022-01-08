@@ -1,5 +1,8 @@
 # Defeat-The-Demon-Lord
 I made a game based on a programming exercise
+## Run the Game 
+You will need python >= 3 + tkinter + numpy 
+
 ## Controls 
 Press Up, Left, Right, Down to turn.
 

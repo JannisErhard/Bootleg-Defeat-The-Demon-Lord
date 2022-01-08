@@ -6,7 +6,7 @@ You will need python >= 3 + tkinter + numpy
 ## Controls 
 Press Up, Left, Right, Down to turn.
 
-Press 'f' to move in the direction you are pointing.
+Press 'spacebar' to move in the direction you are pointing.
 
 Faces are enemies (in general, not just in the game).
 

@@ -416,13 +416,14 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
     bag.sort()
     return map_back, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord
 import tkinter as tk
-global first_map, HP, attk, defn, bag, HP_Demon_Lord, msg, stage 
+global first_map, HP, attk, defn, bag, HP_Demon_Lord, msg, stage, max_level
 attk, defn, HP, exp, HP_Demon_Lord   = 1, 1, 3, 0, 10
 msg = "Game Start"
 
 bag = []
 receipts_and_deleted_tweets = []
 stage = 1
+max_level = 4
 
 campaign = {}
 
@@ -440,7 +441,19 @@ campaign[3] = [
 [' ',' ','E',' ',' ','#',' ','#',' '],
 ['#','#','#','#','E','#',' ','#','#'],
 [' ',' ',' ',' ',' ','#',' ','E',' '],
-['^',' ',' ',' ',' ','E','K','E','X']]
+['^',' ','E',' ',' ','E','K','E','X']]
+campaign[4] = [
+['E',' ', 'E', ' ', 'E', 'E', 'E', ' ', 'E', ' ', ' ', 'E', ' ', '^', ' ', 'E', 'E', 'E'],
+['E',' ', 'E', ' ', 'E', ' ', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', ' ', 'E'],
+['E','E', 'E', ' ', 'E', 'E', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', 'D', 'E'],
+['E',' ', 'E', ' ', 'E', ' ', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', ' ', 'E'],
+['E',' ', 'E', ' ', 'E', 'E', 'E', ' ', 'E', 'E', ' ', 'E', 'E', ' ', ' ', 'E', 'E', 'E']]
+campaign['win'] = [
+list('You Win'+' '*(len('Thanks for playing!')-7)),
+list('Game Over'+' '*(len('Thanks for playing!')-9)),
+list(' '*len('Thanks for playing!')),
+list('Thanks for playing!')
+        ]
 
 
 first_map = campaign[1]
@@ -513,14 +526,19 @@ def map_to_screen(map):
     Frame = "\n".join(translator)
     return Frame
 def check_stage_progression():
-    global HP_Demon_Lord, stage, first_map, attk , HP, defn
+    global HP_Demon_Lord, stage, first_map, attk , HP, defn, max_level, msg
     if HP_Demon_Lord <= 0:
         HP_Demon_Lord = 10
         stage += 1
-        first_map = campaign[stage]
-        attk = 1
-        defn = 1
-        HP = 3
+        if stage > max_level: 
+            msg = ''
+            first_map = campaign['win']
+        else: 
+            msg = 'Level '+str(stage)
+            first_map = campaign[stage]
+            attk = 1
+            defn = 1
+            HP = 3
 def turn_up_input(self):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '^',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord)

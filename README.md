@@ -34,4 +34,4 @@ Defeat the Black face to progress to the next map.
 ## Disclaimer
 The code doesn't solve the exercise. It's also written poorly.
 
-Currently there are two maps.
+Currently there are 3 maps.

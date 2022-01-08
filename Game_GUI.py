@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord): 
-    HIT_BOX='^v<>HA'
+    HIT_BOX='^v<>HAKC'
     Flavor_Text_1="The Demon Lord bends you over and gives you a good spanking for:"
     Flavor_Text_2="One of the Demon Lord lackys scratches you for:"
     print(field)
@@ -34,16 +34,11 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
             break
         if i in 'KCH':
             if i not in bag:
-                #return None gui kram
-                break
+                pass
             else:
                 if i == 'H':
-                    if HP == 3:
-                        #return None gui kram
-                        break
-                    else:
-                        HP = 3
-                        bag.remove('H')
+                   HP = 3
+                   bag.remove('H')
                 if i == 'K':
                     print("I use Key!")
                     key_success = False
@@ -68,8 +63,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                             np_field[player_x, player_y-1]  = ' '
                             key_success = True
                     if not key_success:
-                        #return None gui Kram
-                        break 
+                        pass 
                 if i == 'C':#TODO: unlock doors left right down, unclear: nec. 2 face door ?
                     print("I use Coin!")
                     commerce_success = False

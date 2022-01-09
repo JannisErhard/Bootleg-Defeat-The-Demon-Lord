@@ -409,6 +409,18 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
         map_back.append(list(np_field[:][i]))
     bag.sort()
     return map_back, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord
+
+def unbind_all():
+    root.unbind('<Up>')
+    root.unbind('<Left>')
+    root.unbind('<Down>')
+    root.unbind('<Right>')
+    root.unbind('<space>')
+    root.unbind('k')
+    root.unbind('h')
+    root.unbind('c')
+    root.unbind('a')
+
 import tkinter as tk
 global first_map, HP, attk, defn, bag, HP_Demon_Lord, msg, stage, max_level
 attk, defn, HP, exp, HP_Demon_Lord   = 1, 1, 3, 0, 10
@@ -472,10 +484,10 @@ def map_to_screen(map):
                 substring += '▓'
             translator.append(substring)
         translator.append("Game Over")
+        unbind_all()
     else:
         print("♥:",HP," †:", attk, ' ♦:', defn, 'EX:', exp)
         len_y = 0
-        len_x = 0
         substring = str()
         translator = []
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
@@ -491,7 +503,6 @@ def map_to_screen(map):
             substring += '╗'
         translator.append(substring)
         for i in map:
-            len_x+=1
             substring = str()
             if style == 'style_1':
                 substring += '#'
@@ -525,6 +536,7 @@ def check_stage_progression():
         HP_Demon_Lord = 10
         stage += 1
         if stage > max_level: 
+            unbind_all()
             msg = ''
             first_map = campaign['win']
         else: 

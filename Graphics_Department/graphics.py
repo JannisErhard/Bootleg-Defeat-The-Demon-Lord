@@ -61,6 +61,28 @@ class Sword_sprite:
         for i in range(1,5):
             gamecanvas.delete(self.spriteid[i])
 
+class Coin_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        self.frameid = gamecanvas.create_oval(center[0]-6, center[1]-6, center[0]+6, center[1]+6, fill='yellow',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.frameid)
+
+class Potion_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        self.frameid = gamecanvas.create_rectangle(center[0]-6, center[1]-6, center[0]+6, center[1]+6, fill='blue',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.frameid)
+
 class vertical_door_sprite:
     def __init__(self,x,y, gamecanvas):
         left_up =    [y-0,x-16]
@@ -286,10 +308,8 @@ def draw_on_canvas(current_map, gamecanvas):
         i_y = 1
         for tile  in sublist:
             if tile == 'E':
-                print("stuff happens")
                 enemy = enemy_sprite(i_x*32, i_y*32, gamecanvas)
                 enemy_list.append([i_x-3,i_y-1,enemy])
-                print(current_map[i_x-3][i_y-1])
             if tile in "^v<>":
                 hero = hero_sprite(i_x*32,i_y*32, gamecanvas, i_x-3, i_y-1, tile)
             if tile == "|":
@@ -307,6 +327,12 @@ def draw_on_canvas(current_map, gamecanvas):
             if tile == "S":
                 Shield = Shield_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, 'S', Shield])
+            if tile == "C":
+                Coin = Coin_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'C', Coin])
+            if tile == "H":
+                Potion = Potion_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'H', Potion])
             if tile == "K":
                 Key = Key_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, 'K', Key])

@@ -11,13 +11,13 @@ class enemy_sprite:
         # body
         self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
         # head
-        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='lightsalmon',outline='black')
         #eye left
-        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
         #eye right
-        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
         # nose
-        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+        self.noseid = gamecanvas.create_oval(center[0]-4, center[1]-8, center[0]+4, center[1], fill='salmon',outline='black')
     def die(self, gamecanvas):
         gamecanvas.delete(self.bodyid)
         gamecanvas.delete(self.headid)
@@ -45,30 +45,45 @@ class hero_sprite:
             self.face_left(center, gamecanvas)
         if orientation == '>':
             self.face_right(center, gamecanvas)
+    def update(self, x, y , gamecanvas, orientation):
+        center = [y+16, x]
+        gamecanvas.delete(self.bodyid, self.headid)
+        if hasattr(self, 'lefteyeid'):
+            gamecanvas.delete(self.lefteyeid)
+        if hasattr(self, 'righteyeid'):
+            gamecanvas.delete(self.righteyeid)
+        if hasattr(self, 'noseid'):
+            gamecanvas.delete(self.noseid)
+        if orientation == '^':
+            self.face_up(center, gamecanvas)
+        if orientation == 'v':
+            self.face_down(center, gamecanvas)
+        if orientation == '<':
+            self.face_left(center, gamecanvas)
+        if orientation == '>':
+            self.face_right(center, gamecanvas)
+
+    #def move():
+    #def turn():
     def face_left(self, center, gamecanvas):
         self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
-        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
-        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='tan',outline='black')
+        self.righteyeid = gamecanvas.create_line(center[0]-6, center[1]-5, center[0], center[1]-11, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_rectangle(center[0]-5, center[1]-4, center[0]-8, center[1], fill='tan3',outline='black')
     def face_right(self, center, gamecanvas):
         self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
-        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
-        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='tan',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0], center[1]-11, center[0]+6, center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_rectangle(center[0]+5, center[1]-4, center[0]+8, center[1], fill='tan3',outline='black')
     def face_up(self, center, gamecanvas):
         self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
-        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
-        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='tan',outline='black')
     def face_down(self, center, gamecanvas):
         self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
-        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
-        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
-        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='tan',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_rectangle(center[0]-2, center[1]-4, center[0]+2, center[1], fill='tan1',outline='black')
 
 
 def draw_wall(x,y, gamecanvas):

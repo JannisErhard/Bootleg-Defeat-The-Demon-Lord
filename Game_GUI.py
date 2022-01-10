@@ -558,11 +558,21 @@ def check_stage_progression():
 
 
 def update_all_objects(enemy_list, current_map):
+    global hero
     for sublist in enemy_list:
         if current_map[sublist[0]][sublist[1]] != 'E':
             print(sublist[0], sublist[1], "is dead and",current_map[sublist[0]][sublist[1]])
             sublist[2].die(gamecanvas)
             enemy_list.remove(sublist)
+        i_x = 3
+        for sublist in current_map:
+            i_y = 1
+            for tile in sublist:
+                if tile in "^v<>":
+                    hero.update(i_x*32,i_y*32,gamecanvas,tile)
+                i_y += 1
+            i_x += 1
+
 
 
 def turn_up_input(self):
@@ -639,6 +649,7 @@ root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
 if debug: gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
+if debug: global hero
 if debug: enemy_list, hero = draw_on_canvas(first_map, gamecanvas)
 if debug: print(enemy_list)
 root.bind('<Up>',turn_up_input)

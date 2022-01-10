@@ -25,6 +25,99 @@ class enemy_sprite:
         gamecanvas.delete(self.righteyeid)
         gamecanvas.delete(self.noseid)
 
+class Sword_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        self.spriteid = {}
+        # body arguments are left_border, up_border, right_border, down_border
+        self.spriteid[1] = gamecanvas.create_line(center[0]+1, center[1]+11, center[0]+1, center[1]-12, fill='grey40', width = 2)
+        self.spriteid[2] = gamecanvas.create_line(center[0]-1, center[1]+11, center[0]-1, center[1]-12, fill='grey40', width = 2)
+        self.spriteid[3] = gamecanvas.create_line(center[0], center[1]+15, center[0], center[1]-15, fill='grey50', width = 2)
+        self.spriteid[4] = gamecanvas.create_line(center[0]-3, center[1]+12, center[0]+3, center[1]+12, fill='brown', width = 2)
+    def vanish(self, gamecanvas):
+        for i in range(1,5):
+            gamecanvas.delete(self.spriteid[i])
+
+class vertical_door_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        # body arguments are left_border, up_border, right_border, down_border
+        self.frameid = gamecanvas.create_rectangle(center[0]-2, center[1]-32, center[0]+2, center[1]+16, fill='Orangered3',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.frameid)
+
+class Key_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        # body arguments are left_border, up_border, right_border, down_border
+        self.frameid = gamecanvas.create_oval(center[0]+8, center[1]-8, center[0]+14, center[1]-14, fill='yellow',outline='darkorange')
+        self.stielid2 = gamecanvas.create_line(center[0]-6, center[1]+6,center[0]+8, center[1]-8, fill='yellow', width = 2)
+        self.stielid3 = gamecanvas.create_line(center[0]-6, center[1]+6, center[0]+3, center[1]+12, fill='yellow', width = 2)
+        self.stielid4 = gamecanvas.create_line(center[0]-4, center[1]+4, center[0]+5, center[1]+10, fill='yellow', width = 2)
+        self.stielid5 = gamecanvas.create_line(center[0]-2, center[1]+2, center[0]+7, center[1]+8, fill='yellow', width = 2)
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.frameid)
+        gamecanvas.delete(self.stielid2)
+        gamecanvas.delete(self.stielid3)
+        gamecanvas.delete(self.stielid4)
+        gamecanvas.delete(self.stielid5)
+
+
+
+class Shield_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        # body arguments are left_border, up_border, right_border, down_border
+        self.frameid = {}
+        colors = {14 : 'grey10', 13 : 'grey20', 12 : 'grey30', 11 : 'grey40'}
+        for var in range(14,10,-1):
+            self.frameid[var] = gamecanvas.create_oval(center[0]-var, center[1]-var, center[0]+var, center[1]+var, fill=colors[var],outline=colors[var])
+        var = 5
+        self.frameid[10] = gamecanvas.create_oval(center[0]-var, center[1]-var, center[0]+var, center[1]+var, fill='grey30',outline='grey10')
+    def vanish(self, gamecanvas):
+        for var in range(14,9,-1):
+            gamecanvas.delete(self.frameid[var])
+
+class Boss_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        # body
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='blue',outline='black')
+        # head
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='red',outline='black')
+        #eye left
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        #eye right
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        # nose
+        self.noseid = gamecanvas.create_oval(center[0]-4, center[1]-8, center[0]+4, center[1], fill='salmon',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.bodyid)
+        gamecanvas.delete(self.headid)
+        gamecanvas.delete(self.lefteyeid)
+        gamecanvas.delete(self.righteyeid)
+        gamecanvas.delete(self.noseid)
+
 class hero_sprite:
     def __init__(self,x,y, gamecanvas, board_x, board_y, orientation):
         self.board_x = board_x
@@ -124,6 +217,7 @@ def draw_grass(x,y, gamecanvas):
 
 def draw_on_canvas(current_map, gamecanvas):
     enemy_list = []
+    disposable_objects_list = []
     i_x = 2
     i_y = 1
     for i_y in range(len(current_map[0])):
@@ -165,6 +259,21 @@ def draw_on_canvas(current_map, gamecanvas):
                 print(current_map[i_x-3][i_y-1])
             if tile in "^v<>":
                 hero = hero_sprite(i_x*32,i_y*32, gamecanvas, i_x-3, i_y-1, tile)
+            if tile == "|":
+                door = vertical_door_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, '|', door])
+            if tile == "D":
+                Boss = Boss_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'D', Boss])
+            if tile == "S":
+                Shield = Shield_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'S', Shield])
+            if tile == "K":
+                Key = Key_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'K', Key])
+            if tile == "X":
+                Sword = Sword_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'X', Sword])
             i_y = i_y + 1
         i_x = i_x+1
-    return enemy_list, hero
+    return enemy_list, hero, disposable_objects_list

@@ -542,6 +542,7 @@ def map_to_screen(map):
     return Frame
 def check_stage_progression():
     global HP_Demon_Lord, debug, stage, first_map, attk , HP, defn, max_level, msg
+    if debug: global  hero, enemy_list, disposable_objects_list
     if HP_Demon_Lord <= 0:
         HP_Demon_Lord = 10
         stage += 1
@@ -552,26 +553,37 @@ def check_stage_progression():
         else: 
             msg = 'Level '+str(stage)
             first_map = campaign[stage]
+            if debug: del hero
+            if debug: enemy_list = []
+            if debug: disposable_objects_list = []
+            if debug: enemy_list, hero, disposable_objects_list = draw_on_canvas(first_map, gamecanvas)
             attk = 1
             defn = 1
             HP = 3
 
 
 def update_all_objects(enemy_list, current_map):
-    global hero
+    global hero, disposable_objects
     for sublist in enemy_list:
         if current_map[sublist[0]][sublist[1]] != 'E':
             print(sublist[0], sublist[1], "is dead and",current_map[sublist[0]][sublist[1]])
             sublist[2].die(gamecanvas)
             enemy_list.remove(sublist)
-        i_x = 3
-        for sublist in current_map:
-            i_y = 1
-            for tile in sublist:
-                if tile in "^v<>":
-                    hero.update(i_x*32,i_y*32,gamecanvas,tile)
-                i_y += 1
-            i_x += 1
+
+
+    for sublist in disposable_objects_list:
+        if current_map[sublist[0]][sublist[1]] != sublist[2]:
+            sublist[3].vanish(gamecanvas)
+            disposable_objects_list.remove(sublist)
+
+    i_x = 3
+    for sublist in current_map:
+        i_y = 1
+        for tile in sublist:
+            if tile in "^v<>":
+                hero.update(i_x*32,i_y*32,gamecanvas,tile)
+            i_y += 1
+        i_x += 1
 
 
 
@@ -649,9 +661,8 @@ root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
 if debug: gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
-if debug: global hero
-if debug: enemy_list, hero = draw_on_canvas(first_map, gamecanvas)
-if debug: print(enemy_list)
+if debug: global hero, disposable_objects_list
+if debug: enemy_list, hero, disposable_objects_list = draw_on_canvas(first_map, gamecanvas)
 root.bind('<Up>',turn_up_input)
 root.bind('<Left>',turn_left_input)
 root.bind('<Down>',turn_down_input)

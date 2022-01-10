@@ -3,7 +3,6 @@ import random
 # left right is for canvas the second coordinate hile for map its the first, could transpose map but than ascii graphics would be flipped
 class enemy_sprite:
     def __init__(self,x,y, gamecanvas):
-        print("Breath")
         left_up =    [y-0,x-16]
         right_up =   [y+32,x-16]
         left_down =  [y-0,x+16]
@@ -26,6 +25,50 @@ class enemy_sprite:
         gamecanvas.delete(self.righteyeid)
         gamecanvas.delete(self.noseid)
 
+class hero_sprite:
+    def __init__(self,x,y, gamecanvas, board_x, board_y, orientation):
+        self.board_x = board_x
+        self.board_y = board_y
+        self.canvas_coord = [x,y]
+        self.orientation = orientation
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        print(x,y,orientation)
+        if orientation == '^':
+            self.face_up(center, gamecanvas)
+        if orientation == 'v':
+            self.face_down(center, gamecanvas)
+        if orientation == '<':
+            self.face_left(center, gamecanvas)
+        if orientation == '>':
+            self.face_right(center, gamecanvas)
+    def face_left(self, center, gamecanvas):
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+    def face_right(self, center, gamecanvas):
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+    def face_up(self, center, gamecanvas):
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
+    def face_down(self, center, gamecanvas):
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='grey60',outline='black')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-8-6, center[0]+8, center[1]+8-6, fill='lightsalmon',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-6-5, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_oval(center[0]-8+4, center[1]-8-6+4+2, center[0]+8-4, center[1]+8-6-4+2, fill='salmon',outline='black')
 
 
 def draw_wall(x,y, gamecanvas):
@@ -65,7 +108,6 @@ def draw_grass(x,y, gamecanvas):
     gamecanvas.create_rectangle(left_down, right_up, fill='green3',outline='green3')
 
 def draw_on_canvas(current_map, gamecanvas):
-    #enemy_list = [[]*len(current_map)]*len(current_map[0])
     enemy_list = []
     i_x = 2
     i_y = 1
@@ -96,7 +138,7 @@ def draw_on_canvas(current_map, gamecanvas):
         i_x = i_x+1
     for i_y in range(len(current_map[0])):
         draw_roof(i_x*32, (i_y+1)*32, gamecanvas)
-# Draw Objects
+# Draw Sprites
     i_x = 3
     for sublist in current_map:
         i_y = 1
@@ -106,6 +148,8 @@ def draw_on_canvas(current_map, gamecanvas):
                 enemy = enemy_sprite(i_x*32, i_y*32, gamecanvas)
                 enemy_list.append([i_x-3,i_y-1,enemy])
                 print(current_map[i_x-3][i_y-1])
+            if tile in "^v<>":
+                hero = hero_sprite(i_x*32,i_y*32, gamecanvas, i_x-3, i_y-1, tile)
             i_y = i_y + 1
         i_x = i_x+1
-    return enemy_list
+    return enemy_list, hero

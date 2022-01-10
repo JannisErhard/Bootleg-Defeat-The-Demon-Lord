@@ -632,14 +632,14 @@ def Use_Coin(self):
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 
-debug = False
+debug = True
 Frame = map_to_screen(first_map)
 if debug: print(Frame)
 root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
 if debug: gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
-if debug: enemy_list = draw_on_canvas(first_map, gamecanvas)
+if debug: enemy_list, hero = draw_on_canvas(first_map, gamecanvas)
 if debug: print(enemy_list)
 root.bind('<Up>',turn_up_input)
 root.bind('<Left>',turn_left_input)

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from Graphics_Department.graphics import draw_on_canvas
 import numpy as np
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug): 
     HIT_BOX='^v<>HAKC'
@@ -423,6 +424,8 @@ def unbind_all():
 
 import tkinter as tk
 global first_map, HP, attk, defn, bag, HP_Demon_Lord, debug, msg, stage, max_level
+global map_width, extended_map_height
+map_width , extended_map_height = int(), int()
 attk, defn, HP, exp, HP_Demon_Lord   = 1, 1, 3, 0, 10
 msg = "Game Start"
 
@@ -433,15 +436,15 @@ max_level = 4
 
 campaign = {}
 
-campaign[1] = [
+campaign[2] = [
             list('SX#  EDE '),
             list('  # EEEEE'),
             list('#-#     X'),
             list('         '),
             list('^       K'),
         ]
-campaign[2] = [['K', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '>', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', 'S', '#', ' ', ' ', 'D', ' ', ' '], [' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', 'E', ' ', 'E', ' '], ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '-', '#', '#'], [' ', ' ', ' ', ' ', ' ', 'M', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', 'E', 'E', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'K', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'H', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ']]
-campaign[3] = [
+campaign[3] = [['K', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '>', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', 'S', '#', ' ', ' ', 'D', ' ', ' '], [' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', 'E', ' ', 'E', ' '], ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '-', '#', '#'], [' ', ' ', ' ', ' ', ' ', 'M', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', 'E', 'E', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'K', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'H', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ']]
+campaign[1] = [
 ['S',' ',' ',' ',' ',' ',' ','#',' '],
 [' ',' ','#','#','#','#',' ','|','D'],
 [' ',' ','E',' ',' ','#',' ','#',' '],
@@ -471,6 +474,7 @@ for sublist in first_map:
 def map_to_screen(map):
     global bag, HP, attk, defn, exp, msg, HP_Demon_Lord, debug
     style = 'style_2'
+    global map_width, extended_map_height
     if debug: print("style is updated:", style == 'style_2')
 
     if HP <= 0:
@@ -488,6 +492,7 @@ def map_to_screen(map):
     else:
         if debug: print("♥:",HP," †:", attk, ' ♦:', defn, 'EX:', exp)
         len_y = 0
+        len_x = 0
         substring = str()
         translator = []
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
@@ -503,6 +508,7 @@ def map_to_screen(map):
             substring += '╗'
         translator.append(substring)
         for i in map:
+            len_x += 1
             substring = str()
             if style == 'style_1':
                 substring += '#'
@@ -528,6 +534,10 @@ def map_to_screen(map):
             substring += '╝'
         translator.append(substring)
         translator.append(msg)
+
+        map_width = (len_y+2)*32
+        extended_map_height = (len_x+2+3)*32
+
     Frame = "\n".join(translator)
     return Frame
 def check_stage_progression():
@@ -545,60 +555,79 @@ def check_stage_progression():
             attk = 1
             defn = 1
             HP = 3
+
+
+def update_all_objects(enemy_list, current_map):
+    for sublist in enemy_list:
+        if current_map[sublist[0]][sublist[1]] != 'E':
+            print(sublist[0], sublist[1], "is dead and",current_map[sublist[0]][sublist[1]])
+            sublist[2].die(gamecanvas)
+            enemy_list.remove(sublist)
+
+
 def turn_up_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list 
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '^',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def turn_left_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '<',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     if debug: print(Frame)
     gamewindow.configure(text=Frame)
 def turn_right_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '>',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     if debug: print(Frame)
     gamewindow.configure(text=Frame)
 def turn_down_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'v',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     if debug: print(Frame)
     gamewindow.configure(text=Frame)
 def Move(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'F',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Use_Key(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'K',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Attack(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'A',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Use_Potion(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets  , HP_Demon_Lord= rpg(first_map, 'H',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
 def Use_Coin(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug 
+    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'C',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    if debug: update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame  = map_to_screen(first_map)
     gamewindow.configure(text=Frame)
@@ -607,7 +636,11 @@ debug = False
 Frame = map_to_screen(first_map)
 if debug: print(Frame)
 root = tk.Tk()
+root.wm_title("Bootleg Defeat The Demon Lord")
 gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
+if debug: gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
+if debug: enemy_list = draw_on_canvas(first_map, gamecanvas)
+if debug: print(enemy_list)
 root.bind('<Up>',turn_up_input)
 root.bind('<Left>',turn_left_input)
 root.bind('<Down>',turn_down_input)
@@ -617,7 +650,8 @@ root.bind('k',Use_Key)
 root.bind('h',Use_Potion)
 root.bind('c',Use_Coin)
 root.bind('a',Attack)
-gamewindow.pack()
+gamewindow.grid(row=0, column=0)
+if debug: gamecanvas.grid(row=0, column=1)
 tk.mainloop()
 
 

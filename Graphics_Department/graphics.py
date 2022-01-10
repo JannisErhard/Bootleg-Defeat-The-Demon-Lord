@@ -54,6 +54,20 @@ class vertical_door_sprite:
     def vanish(self, gamecanvas):
         gamecanvas.delete(self.frameid)
 
+class horizontal_door_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        # body arguments are left_border, up_border, right_border, down_border
+        self.topid = gamecanvas.create_rectangle(center[0]-16, center[1]-14, center[0]+16, center[1]-8, fill='Orangered3',outline='black')
+        self.frameid = gamecanvas.create_rectangle(center[0]-16, center[1]-8, center[0]+16, center[1]+16, fill='Orangered4',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.frameid)
+        gamecanvas.delete(self.topid)
+
 class Key_sprite:
     def __init__(self,x,y, gamecanvas):
         left_up =    [y-0,x-16]
@@ -262,6 +276,9 @@ def draw_on_canvas(current_map, gamecanvas):
             if tile == "|":
                 door = vertical_door_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, '|', door])
+            if tile == "-":
+                door = horizontal_door_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, '-', door])
             if tile == "D":
                 Boss = Boss_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, 'D', Boss])

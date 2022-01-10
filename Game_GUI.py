@@ -436,14 +436,14 @@ max_level = 4
 
 campaign = {}
 
-campaign[1] = [
+campaign[3] = [
             list('SX#  EDE '),
             list('  # EEEEE'),
             list('#-#     X'),
             list('         '),
             list('^       K'),
         ]
-campaign[3] = [['K', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '>', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', 'S', '#', ' ', ' ', 'D', ' ', ' '], [' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', 'E', ' ', 'E', ' '], ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '-', '#', '#'], [' ', ' ', ' ', ' ', ' ', 'M', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', 'E', 'E', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'K', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'H', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ']]
+campaign[1] = [['K', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '>', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', 'S', '#', ' ', ' ', 'D', ' ', ' '], [' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', 'E', ' ', 'E', ' '], ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '-', '#', '#'], [' ', ' ', ' ', ' ', ' ', 'M', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', 'E', 'E', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'K', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'H', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ']]
 campaign[2] = [
 ['S',' ',' ',' ',' ',' ',' ','#',' '],
 [' ',' ','#','#','#','#',' ','|','D'],
@@ -473,15 +473,17 @@ for sublist in first_map:
 
 def map_to_screen(map):
     global bag, HP, attk, defn, exp, msg, HP_Demon_Lord, debug
+    if debug: UIText = []
     style = 'style_2'
     global map_width, extended_map_height
     if debug: print("style is updated:", style == 'style_2')
-
+    
     if HP <= 0:
         translator = []
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
         translator.append("Bag: "+str(bag))
         translator.append("              ")
+        UIText[:] = translator[:]
         for i in map:
             substring = str()
             for j in i:
@@ -498,6 +500,7 @@ def map_to_screen(map):
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
         translator.append("Bag: "+str(bag))
         translator.append("              ")
+        UIText[:] = translator[:]
         len_y = len(map[0])
         if style == 'style_1':
             substring=(len_y+2)*'#'
@@ -537,9 +540,8 @@ def map_to_screen(map):
 
         map_width = (len_y+2)*32
         extended_map_height = (len_x+2+3)*32
-
     Frame = "\n".join(translator)
-    return Frame
+    return Frame, "\n".join(UIText)
 def check_stage_progression():
     global HP_Demon_Lord, debug, stage, first_map, attk , HP, defn, max_level, msg
     if debug: global  hero, enemy_list, disposable_objects_list
@@ -655,11 +657,11 @@ def Use_Coin(self):
     gamewindow.configure(text=Frame)
 
 debug = True
-Frame = map_to_screen(first_map)
-if debug: print(Frame)
+Frame, UIText = map_to_screen(first_map)
 root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
+if debug: UI_of_Canvas = tk.Label(root, text=UIText, font = ('Courier new', 26))
 if debug: gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
 if debug: global hero, disposable_objects_list
 if debug: enemy_list, hero, disposable_objects_list = draw_on_canvas(first_map, gamecanvas)
@@ -672,8 +674,9 @@ root.bind('k',Use_Key)
 root.bind('h',Use_Potion)
 root.bind('c',Use_Coin)
 root.bind('a',Attack)
-gamewindow.grid(row=0, column=0)
-if debug: gamecanvas.grid(row=0, column=1)
+#gamewindow.grid(row=0, column=0)
+if debug: UI_of_Canvas.grid(row=0, column=1)
+if debug: gamecanvas.grid(row=1, column=1)
 tk.mainloop()
 
 

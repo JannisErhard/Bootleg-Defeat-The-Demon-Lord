@@ -25,6 +25,25 @@ class enemy_sprite:
         gamecanvas.delete(self.righteyeid)
         gamecanvas.delete(self.noseid)
 
+class Merchant_sprite:
+    def __init__(self,x,y, gamecanvas):
+        left_up =    [y-0,x-16]
+        right_up =   [y+32,x-16]
+        left_down =  [y-0,x+16]
+        right_down = [y+32,x+16]
+        center = [y+16, x]
+        self.bodyid = gamecanvas.create_rectangle(center[0]-7, center[1]-8, center[0]+7, center[1]+8, fill='yellow',outline='orange')
+        self.headid = gamecanvas.create_oval(center[0]-8, center[1]-14, center[0]+8, center[1]+2, fill='tan',outline='black')
+        self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
+        self.noseid = gamecanvas.create_oval(center[0]-4, center[1]-8, center[0]+4, center[1], fill='tan1',outline='black')
+    def vanish(self, gamecanvas):
+        gamecanvas.delete(self.bodyid)
+        gamecanvas.delete(self.headid)
+        gamecanvas.delete(self.lefteyeid)
+        gamecanvas.delete(self.righteyeid)
+        gamecanvas.delete(self.noseid)
+
 class Sword_sprite:
     def __init__(self,x,y, gamecanvas):
         left_up =    [y-0,x-16]
@@ -282,6 +301,9 @@ def draw_on_canvas(current_map, gamecanvas):
             if tile == "D":
                 Boss = Boss_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, 'D', Boss])
+            if tile == "M":
+                Merchant = Merchant_sprite(i_x*32, i_y*32, gamecanvas)
+                disposable_objects_list.append([i_x-3, i_y-1, 'M', Merchant])
             if tile == "S":
                 Shield = Shield_sprite(i_x*32, i_y*32, gamecanvas)
                 disposable_objects_list.append([i_x-3, i_y-1, 'S', Shield])

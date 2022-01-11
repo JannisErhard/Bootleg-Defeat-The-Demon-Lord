@@ -127,17 +127,28 @@ class Key_sprite:
         right_down = [y+32,x+16]
         center = [y+16, x]
         # body arguments are left_border, up_border, right_border, down_border
-        self.frameid = gamecanvas.create_oval(center[0]+8, center[1]-8, center[0]+14, center[1]-14, fill='yellow',outline='darkorange')
-        self.stielid2 = gamecanvas.create_line(center[0]-6, center[1]+6,center[0]+8, center[1]-8, fill='yellow', width = 2)
+        self.frameid =  gamecanvas.create_oval(center[0]+8, center[1]-8, center[0]+14, center[1]-14, fill='yellow',outline='darkorange')
+
+        self.stielid6 = gamecanvas.create_line(center[0]-6, center[1]+6-2, center[0]+8, center[1]-8 -2,  fill='orange', width = 2)
+        self.stielid7 = gamecanvas.create_line(center[0]-6, center[1]+6-2, center[0]+3, center[1]+12-2,  fill='orange', width = 2)
+        self.stielid8 = gamecanvas.create_line(center[0]-4, center[1]+4-2, center[0]+5, center[1]+10-2,  fill='orange', width = 2)
+        self.stielid9 = gamecanvas.create_line(center[0]-2, center[1]+2-2, center[0]+7, center[1]+8 -2,  fill='orange', width = 2)
+
+        self.stielid2 = gamecanvas.create_line(center[0]-6, center[1]+6, center[0]+8, center[1]-8,  fill='yellow', width = 2)
         self.stielid3 = gamecanvas.create_line(center[0]-6, center[1]+6, center[0]+3, center[1]+12, fill='yellow', width = 2)
         self.stielid4 = gamecanvas.create_line(center[0]-4, center[1]+4, center[0]+5, center[1]+10, fill='yellow', width = 2)
-        self.stielid5 = gamecanvas.create_line(center[0]-2, center[1]+2, center[0]+7, center[1]+8, fill='yellow', width = 2)
+        self.stielid5 = gamecanvas.create_line(center[0]-2, center[1]+2, center[0]+7, center[1]+8,  fill='yellow', width = 2)
+
     def vanish(self, gamecanvas):
         gamecanvas.delete(self.frameid)
         gamecanvas.delete(self.stielid2)
         gamecanvas.delete(self.stielid3)
         gamecanvas.delete(self.stielid4)
         gamecanvas.delete(self.stielid5)
+        gamecanvas.delete(self.stielid6)
+        gamecanvas.delete(self.stielid7)
+        gamecanvas.delete(self.stielid8)
+        gamecanvas.delete(self.stielid9)
 
 
 
@@ -284,7 +295,8 @@ def draw_on_canvas(current_map, gamecanvas):
     enemy_list = []
     disposable_objects_list = []
     i_x = 2
-    i_y = 1
+    draw_roof(i_x*32, 0, gamecanvas)
+    draw_roof(i_x*32, (len(current_map[0])+1)*32, gamecanvas)
     for i_y in range(len(current_map[0])):
         if current_map[0][i_y] != '#':
             draw_wall(i_x*32, (i_y+1)*32, gamecanvas)
@@ -312,6 +324,8 @@ def draw_on_canvas(current_map, gamecanvas):
         i_x = i_x+1
     for i_y in range(len(current_map[0])):
         draw_roof(i_x*32, (i_y+1)*32, gamecanvas)
+    draw_roof(i_x*32, 0, gamecanvas)
+    draw_roof(i_x*32, (len(current_map[0])+1)*32, gamecanvas)
 # Draw Sprites
     i_x = 3
     for sublist in current_map:

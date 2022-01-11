@@ -1,6 +1,15 @@
 from tkinter import *
 import random
 # left right is for canvas the second coordinate hile for map its the first, could transpose map but than ascii graphics would be flipped
+def go_screen(gamecanvas):
+    height = gamecanvas.winfo_height()
+    width = gamecanvas.winfo_width()
+    gamecanvas.create_line(0,width//4,width, height,fill='red', width=10)
+    gamecanvas.create_line(0,height,width,width//4,fill='red', width=10)
+    gamecanvas.create_oval(width//8*3, height//8*3+height//8, 5*width//8, 5*height//8+height//8,fill='red', outline='red')
+    gamecanvas.create_oval(width//4, height//4-height//8, 3*width//4, 3*height//4-height//8,fill='red', outline='red')
+    gamecanvas.create_oval(width//8*3, height//8*4-height//8, 4*width//8, 5*height//8-height//8,fill='black', outline='red')
+    gamecanvas.create_oval(width//8*4, height//8*4-height//8, 5*width//8, 5*height//8-height//8,fill='black', outline='red')
 class enemy_sprite:
     def __init__(self,x,y, gamecanvas):
         left_up =    [y-0,x-16]

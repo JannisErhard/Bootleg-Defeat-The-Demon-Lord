@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from Graphics_Department.graphics import draw_on_canvas
+from Graphics_Department.graphics import go_screen
 from World.maps import *
 from Statemachine.statemachine import rpg
 
@@ -130,6 +131,9 @@ def check_stage_progression():
             defn = 1
             HP = 3
 
+def show_game_over_screen():
+    gamecanvas.delete("all")
+    go_screen(gamecanvas)
 
 def update_all_objects(enemy_list, current_map):
     global hero, disposable_objects
@@ -159,7 +163,10 @@ def game_action(command):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list 
     global legacy
     first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, command ,attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
+    if HP > 0:
+        update_all_objects(enemy_list, first_map)
+    else:
+        show_game_over_screen()
     check_stage_progression()
     Frame, UIText = map_to_screen(first_map)
     UI_of_Canvas.configure(text=UIText)
@@ -191,7 +198,7 @@ root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 if legacy: gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
 UI_of_Canvas = tk.Label(root, text=UIText, font = ('Courier new', 26))
-gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='grey70')
+gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
 global hero, disposable_objects_list
 enemy_list, hero, disposable_objects_list = draw_on_canvas(first_map, gamecanvas)
 root.bind('<Up>',turn_up_input)

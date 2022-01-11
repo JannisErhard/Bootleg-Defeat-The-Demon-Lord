@@ -155,90 +155,34 @@ def update_all_objects(enemy_list, current_map):
         i_x += 1
 
 
-
-def turn_up_input(self):
+def game_action(command):
     global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list 
     global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '^',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
+    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, command ,attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
     update_all_objects(enemy_list, first_map)
     check_stage_progression()
     Frame, UIText = map_to_screen(first_map)
     UI_of_Canvas.configure(text=UIText)
     if legacy: gamewindow.configure(text=Frame)
+
+def turn_up_input(self):
+    game_action('^')
 def turn_left_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '<',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if debug: print(Frame)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('<')
 def turn_right_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, '>',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if debug: print(Frame)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('>')
 def turn_down_input(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'v',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('v')
 def Move(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'F',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('F')
 def Use_Key(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'K',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('K')
 def Attack(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'A',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('A')
 def Use_Potion(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets  , HP_Demon_Lord= rpg(first_map, 'H',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('H')
 def Use_Coin(self):
-    global first_map, HP, attk, defn, bag, exp, receipts_and_deleted_tweets, HP_Demon_Lord, debug, enemy_list
-    global legacy
-    first_map, attk, defn, HP, exp, bag, receipts_and_deleted_tweets , HP_Demon_Lord = rpg(first_map, 'C',attk, defn, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug)
-    update_all_objects(enemy_list, first_map)
-    check_stage_progression()
-    Frame, UIText = map_to_screen(first_map)
-    UI_of_Canvas.configure(text=UIText)
-    if legacy: gamewindow.configure(text=Frame)
+    game_action('C')
 
 debug = False
 legacy = False
@@ -259,9 +203,11 @@ root.bind('k',Use_Key)
 root.bind('h',Use_Potion)
 root.bind('c',Use_Coin)
 root.bind('a',Attack)
-if legacy: gamewindow.grid(row=0, column=0)
-UI_of_Canvas.grid(row=0, column=1)
-gamecanvas.grid(row=1, column=1)
+if legacy: 
+    gamewindow.grid(row=0, column=0)
+else:
+    UI_of_Canvas.grid(row=0, column=1)
+    gamecanvas.grid(row=1, column=1)
 tk.mainloop()
 
 

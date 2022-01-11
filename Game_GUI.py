@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from Graphics_Department.graphics import draw_on_canvas
 import numpy as np
+from World.maps import *
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug): 
     HIT_BOX='^v<>HAKC'
     Flavor_Text_1="The Demon Lord bends you over and gives you a good spanking for:"
@@ -435,35 +436,6 @@ receipts_and_deleted_tweets = []
 stage = 1
 max_level = 4
 
-campaign = {}
-
-campaign[3] = [
-            list('SX#  EDE '),
-            list('  # EEEEE'),
-            list('#-#     X'),
-            list('         '),
-            list('^       K'),
-        ]
-campaign[1] = [['K', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', 'X', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '>', ' ', ' ', ' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', 'S', '#', ' ', ' ', 'D', ' ', ' '], [' ', ' ', ' ', ' ', 'E', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', ' ', 'E', ' ', 'E', ' '], ['#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', '-', '#', '#'], [' ', ' ', ' ', ' ', ' ', 'M', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'E', 'E', 'E', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', 'K', '#', ' ', ' ', ' ', ' ', ' ', ' '], [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', 'H', ' ', ' ', ' ', '#', '#', 'E', '#', '#', 'E', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ']]
-campaign[2] = [
-['S',' ',' ',' ',' ',' ',' ','#',' '],
-[' ',' ','#','#','#','#',' ','|','D'],
-[' ',' ','E',' ',' ','#',' ','#',' '],
-['#','#','#','#','E','#',' ','#','#'],
-[' ',' ',' ',' ',' ','#',' ','E',' '],
-['^',' ','E',' ',' ','E','K','E','X']]
-campaign[4] = [
-['E',' ', 'E', ' ', 'E', 'E', 'E', ' ', 'E', ' ', ' ', 'E', ' ', '^', ' ', 'E', 'E', 'E'],
-['E',' ', 'E', ' ', 'E', ' ', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', ' ', 'E'],
-['E','E', 'E', ' ', 'E', 'E', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', 'D', 'E'],
-['E',' ', 'E', ' ', 'E', ' ', ' ', ' ', 'E', ' ', ' ', 'E', ' ', ' ', ' ', 'E', ' ', 'E'],
-['E',' ', 'E', ' ', 'E', 'E', 'E', ' ', 'E', 'E', ' ', 'E', 'E', ' ', ' ', 'E', 'E', 'E']]
-campaign['win'] = [
-list('You Win'+' '*(len('Thanks for playing!')-7)),
-list('Game Over'+' '*(len('Thanks for playing!')-9)),
-list(' '*len('Thanks for playing!')),
-list('Thanks for playing!')
-        ]
 
 
 first_map = campaign[1]
@@ -540,7 +512,7 @@ def map_to_screen(map):
         translator.append(msg)
 
         map_width = (len_y+2)*32
-        extended_map_height = (len_x+2+3)*32
+        extended_map_height = (len_x+4)*32
     Frame = "\n".join(translator)
     return Frame, "\n".join(UIText)
 def check_stage_progression():
@@ -684,7 +656,7 @@ root = tk.Tk()
 root.wm_title("Bootleg Defeat The Demon Lord")
 if legacy: gamewindow = tk.Label(root, text=Frame, font = ('Courier new', 26))
 UI_of_Canvas = tk.Label(root, text=UIText, font = ('Courier new', 26))
-gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='black')
+gamecanvas = tk.Canvas(root, width=map_width, height=extended_map_height, bg='grey70')
 global hero, disposable_objects_list
 enemy_list, hero, disposable_objects_list = draw_on_canvas(first_map, gamecanvas)
 root.bind('<Up>',turn_up_input)

@@ -557,6 +557,8 @@ def check_stage_progression():
             msg = 'Level '+str(stage)
             first_map = campaign[stage]
             gamecanvas.delete("all")
+            gamecanvas.configure(width=32*(len(first_map[0])+2))
+            gamecanvas.configure(height=32*(len(first_map)+4))
             del hero
             enemy_list = []
             disposable_objects_list = []

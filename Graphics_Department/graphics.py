@@ -56,7 +56,7 @@ class Sword_sprite:
         self.spriteid[1] = gamecanvas.create_line(center[0]+1, center[1]+11, center[0]+1, center[1]-12, fill='grey40', width = 2)
         self.spriteid[2] = gamecanvas.create_line(center[0]-1, center[1]+11, center[0]-1, center[1]-12, fill='grey40', width = 2)
         self.spriteid[3] = gamecanvas.create_line(center[0], center[1]+15, center[0], center[1]-15, fill='grey50', width = 2)
-        self.spriteid[4] = gamecanvas.create_line(center[0]-3, center[1]+12, center[0]+3, center[1]+12, fill='brown', width = 2)
+        self.spriteid[4] = gamecanvas.create_line(center[0]-3, center[1]+9, center[0]+3, center[1]+9, fill='brown', width = 2)
     def vanish(self, gamecanvas):
         for i in range(1,5):
             gamecanvas.delete(self.spriteid[i])
@@ -68,9 +68,11 @@ class Coin_sprite:
         left_down =  [y-0,x+16]
         right_down = [y+32,x+16]
         center = [y+16, x]
-        self.frameid = gamecanvas.create_oval(center[0]-6, center[1]-6, center[0]+6, center[1]+6, fill='yellow',outline='black')
+        self.frameid2 = gamecanvas.create_oval(center[0]-6, center[1]-4, center[0]+6, center[1]+8, fill='lightgoldenrod',outline='black')
+        self.frameid = gamecanvas.create_oval(center[0]-6, center[1]-6, center[0]+6, center[1]+6, fill='gold',outline='black')
     def vanish(self, gamecanvas):
         gamecanvas.delete(self.frameid)
+        gamecanvas.delete(self.frameid2)
 
 class Potion_sprite:
     def __init__(self,x,y, gamecanvas):
@@ -79,9 +81,17 @@ class Potion_sprite:
         left_down =  [y-0,x+16]
         right_down = [y+32,x+16]
         center = [y+16, x]
-        self.frameid = gamecanvas.create_rectangle(center[0]-6, center[1]-6, center[0]+6, center[1]+6, fill='blue',outline='black')
+        self.frameid1 = gamecanvas.create_oval(center[0]-8, center[1]+2, center[0]+8, center[1]+14, fill='mediumseagreen',outline='black')
+        self.frameid2= gamecanvas.create_rectangle(center[0]-8, center[1]-6, center[0]+8, center[1]+6, fill='mediumseagreen',outline='lightskyblue')
+        self.frameid3 = gamecanvas.create_oval(center[0]-8, center[1]-6, center[0]+8, center[1]+6, fill='lightblue',outline='black')
+        self.frameid4 = gamecanvas.create_oval(center[0]-5, center[1]-7, center[0]+5, center[1]+3, fill='grey90',outline='black')
+        self.frameid5 = gamecanvas.create_oval(center[0]-5, center[1]-9, center[0]+5, center[1]+1, fill='grey70',outline='black')
     def vanish(self, gamecanvas):
-        gamecanvas.delete(self.frameid)
+        gamecanvas.delete(self.frameid1)
+        gamecanvas.delete(self.frameid2)
+        gamecanvas.delete(self.frameid3)
+        gamecanvas.delete(self.frameid4)
+        gamecanvas.delete(self.frameid5)
 
 class vertical_door_sprite:
     def __init__(self,x,y, gamecanvas):
@@ -104,7 +114,7 @@ class horizontal_door_sprite:
         center = [y+16, x]
         # body arguments are left_border, up_border, right_border, down_border
         self.topid = gamecanvas.create_rectangle(center[0]-16, center[1]-14, center[0]+16, center[1]-8, fill='Orangered3',outline='black')
-        self.frameid = gamecanvas.create_rectangle(center[0]-16, center[1]-8, center[0]+16, center[1]+16, fill='Orangered4',outline='black')
+        self.frameid = gamecanvas.create_rectangle(center[0]-16, center[1]-8, center[0]+16, center[1]+12, fill='Orangered4',outline='black')
     def vanish(self, gamecanvas):
         gamecanvas.delete(self.frameid)
         gamecanvas.delete(self.topid)

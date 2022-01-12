@@ -1,6 +1,16 @@
 from tkinter import *
 import random
 # left right is for canvas the second coordinate hile for map its the first, could transpose map but than ascii graphics would be flipped
+
+greens = {}
+greens = {
+1: 'yellowgreen'\
+,2: 'green4'\
+,3: 'darkolivegreen3'\
+,4: 'green4'\
+,5: 'yellowgreen'\
+}
+
 def go_screen(gamecanvas):
     height = gamecanvas.winfo_height()
     width = gamecanvas.winfo_width()
@@ -338,7 +348,10 @@ def draw_grass(x,y, gamecanvas):
     right_up =   [y+32,x-16]
     left_down =  [y-0,x+16]
     right_down = [y+32,x+16]
-    gamecanvas.create_rectangle(left_down, right_up, fill='green3',outline='green3')
+    for i in range(-16,16):
+        for j in range(0,32):
+            gamecanvas.create_line(y+j, x+i, y+j+2, x+i, fill=greens[random.randint(1,5)])
+    #gamecanvas.create_rectangle(left_down, right_up, fill='green3',outline='green3')
 
 def draw_on_canvas(current_map, gamecanvas):
     enemy_list = []

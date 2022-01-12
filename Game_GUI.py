@@ -46,7 +46,7 @@ def map_to_screen(map):
     if HP <= 0:
         translator = []
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
-        translator.append("Bag: "+str(bag))
+        translator.append("Coins:"+str(bag.count('C'))+" Potions:"+str(bag.count('H'))+" Keys:"+str(bag.count('K')))
         translator.append("              ")
         UIText[:] = translator[:]
         for i in map:
@@ -63,7 +63,7 @@ def map_to_screen(map):
         substring = str()
         translator = []
         translator.append("♥:"+str(HP)+" †:"+str(attk)+' ♦:'+str(defn)+' EX:'+str(exp))
-        translator.append("Bag: "+str(bag))
+        translator.append("Coins:"+str(bag.count('C'))+" Potions:"+str(bag.count('H'))+" Keys:"+str(bag.count('K')))
         translator.append("              ")
         UIText[:] = translator[:]
         len_y = len(map[0])

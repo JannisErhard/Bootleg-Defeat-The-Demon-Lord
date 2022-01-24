@@ -294,26 +294,26 @@ def draw_wall(x,y, gamecanvas):
     gamecanvas.create_rectangle(left_inter_sec_3, right_center, fill='gray50', outline='gray50')
     gamecanvas.create_rectangle(left_center, right_half_up, fill='gray60', outline='gray60')
     # row 1 
-    gamecanvas.create_line(y+0,x+15,y+32,x+15,fill=grey[20])
-    gamecanvas.create_line(y+0,x+14,y+32,x+14,fill=grey[50])
-    gamecanvas.create_line(y+0,x+13,y+32,x+13,fill=grey[60])
-    gamecanvas.create_line(y+0,x+12,y+32,x+12,fill=grey[60])
-    gamecanvas.create_line(y+0,x+11,y+32,x+11,fill=grey[60])
-    gamecanvas.create_line(y+0,x+10,y+32,x+10,fill=grey[80])
+    gamecanvas.create_line(y+0,x+15,y+32,x+15,fill=grey[20-18])
+    gamecanvas.create_line(y+0,x+14,y+32,x+14,fill=grey[50-17])
+    gamecanvas.create_line(y+0,x+13,y+32,x+13,fill=grey[60-16])
+    gamecanvas.create_line(y+0,x+12,y+32,x+12,fill=grey[60-15])
+    gamecanvas.create_line(y+0,x+11,y+32,x+11,fill=grey[60-14])
+    gamecanvas.create_line(y+0,x+10,y+32,x+10,fill=grey[80-13])
     # row 2
-    gamecanvas.create_line(y+0,x+9, y+32,x+9,fill=grey[20])
-    gamecanvas.create_line(y+0,x+8, y+32,x+8,fill=grey[50])
-    gamecanvas.create_line(y+0,x+7, y+32 ,x+7,fill=grey[60])
-    gamecanvas.create_line(y+0,x+6, y+32 ,x+6,fill=grey[60])
-    gamecanvas.create_line(y+0,x+5, y+32 ,x+5,fill=grey[60])
-    gamecanvas.create_line(y+0,x+4, y+32 ,x+4,fill=grey[80])
+    gamecanvas.create_line(y+0,x+9, y+32, x+9,fill=grey[20-12])
+    gamecanvas.create_line(y+0,x+8, y+32, x+8,fill=grey[50-11])
+    gamecanvas.create_line(y+0,x+7, y+32 ,x+7,fill=grey[60-10])
+    gamecanvas.create_line(y+0,x+6, y+32 ,x+6,fill=grey[60-9])
+    gamecanvas.create_line(y+0,x+5, y+32 ,x+5,fill=grey[60-8])
+    gamecanvas.create_line(y+0,x+4, y+32 ,x+4,fill=grey[80-7])
     # row 3
-    gamecanvas.create_line(y+0,x+3, y+32,x+3,fill=grey[20])
-    gamecanvas.create_line(y+0,x+2, y+32,x+2,fill=grey[50])
-    gamecanvas.create_line(y+0,x+1, y+32 ,x+1,fill=grey[60])
-    gamecanvas.create_line(y+0,x+0, y+32 ,x+0,fill=grey[60])
-    gamecanvas.create_line(y+0,x-1, y+32 ,x-1,fill=grey[60])
-    gamecanvas.create_line(y+0,x-2, y+32 ,x-2,fill=grey[80])
+    gamecanvas.create_line(y+0,x+3, y+32, x+3,fill=grey[20+20-6])
+    gamecanvas.create_line(y+0,x+2, y+32, x+2,fill=grey[50+20-5])
+    gamecanvas.create_line(y+0,x+1, y+32 ,x+1,fill=grey[60+20-4])
+    gamecanvas.create_line(y+0,x+0, y+32 ,x+0,fill=grey[60+20-3])
+    gamecanvas.create_line(y+0,x-1, y+32 ,x-1,fill=grey[60+20-2])
+    gamecanvas.create_line(y+0,x-2, y+32 ,x-2,fill=grey[80+20-1])
     #middle column
     gamecanvas.create_line(y+16,x+2,y+16 ,x-2,fill=grey[20])
     gamecanvas.create_line(y+17,x+2,y+17 ,x-2,fill=grey[50])
@@ -331,51 +331,13 @@ def draw_wall(x,y, gamecanvas):
     gamecanvas.create_line(y+17,x+10,y+17 ,x+15,fill=grey[50])
     gamecanvas.create_line(y+18,x+10,y+18 ,x+15,fill=grey[70])
 
-#    # row 1 
-#    gamecanvas.create_line(y+0,x+15,y+32,x+15,fill='grey20')
-#    gamecanvas.create_line(y+0,x+14,y+32,x+14,fill='grey50')
-#    gamecanvas.create_line(y+0,x+13,y+32,x+13,fill='grey60')
-#    gamecanvas.create_line(y+0,x+12,y+32,x+12,fill='grey60')
-#    gamecanvas.create_line(y+0,x+11,y+32,x+11,fill='grey60')
-#    gamecanvas.create_line(y+0,x+10,y+32,x+10,fill='grey80')
-#    # row 2
-#    gamecanvas.create_line(y+0,x+9, y+32,x+9,fill='grey20')
-#    gamecanvas.create_line(y+0,x+8, y+32,x+8,fill='grey50')
-#    gamecanvas.create_line(y+0,x+7, y+32 ,x+7,fill='grey60')
-#    gamecanvas.create_line(y+0,x+6, y+32 ,x+6,fill='grey60')
-#    gamecanvas.create_line(y+0,x+5, y+32 ,x+5,fill='grey60')
-#    gamecanvas.create_line(y+0,x+4, y+32 ,x+4,fill='grey80')
-#    # row 3
-#    gamecanvas.create_line(y+0,x+3, y+32,x+3,fill='grey20')
-#    gamecanvas.create_line(y+0,x+2, y+32,x+2,fill='grey50')
-#    gamecanvas.create_line(y+0,x+1, y+32 ,x+1,fill='grey60')
-#    gamecanvas.create_line(y+0,x+0, y+32 ,x+0,fill='grey60')
-#    gamecanvas.create_line(y+0,x-1, y+32 ,x-1,fill='grey60')
-#    gamecanvas.create_line(y+0,x-2, y+32 ,x-2,fill='grey80')
-#    #middle column
-#    gamecanvas.create_line(y+16,x+2,y+16 ,x-2,fill='grey20')
-#    gamecanvas.create_line(y+17,x+2,y+17 ,x-2,fill='grey50')
-#    gamecanvas.create_line(y+18,x+2,y+18 ,x-2,fill='grey70')
-#    #left column
-#    gamecanvas.create_line(y+5,x+4,y+5 ,x+9,fill='grey20')
-#    gamecanvas.create_line(y+6,x+4,y+6 ,x+9,fill='grey50')
-#    gamecanvas.create_line(y+7,x+4,y+7 ,x+9,fill='grey70')
-#    #right column
-#    gamecanvas.create_line(y+20,x+4,y+20 ,x+9,fill='grey20')
-#    gamecanvas.create_line(y+21,x+4,y+21 ,x+9,fill='grey50')
-#    gamecanvas.create_line(y+22,x+4,y+22 ,x+9,fill='grey70')
-#    #middle column
-#    gamecanvas.create_line(y+16,x+10,y+16 ,x+15,fill='grey20')
-#    gamecanvas.create_line(y+17,x+10,y+17 ,x+15,fill='grey50')
-#    gamecanvas.create_line(y+18,x+10,y+18 ,x+15,fill='grey70')
-#
 def draw_roof(x,y, gamecanvas):
     left_up =    [y-0,x-16]
     right_up =   [y+32,x-16]
     left_down =  [y-0,x+16]
     right_down = [y+32,x+16]
     gamecanvas.create_rectangle(left_down, right_up, fill='gray70', outline='gray70')
-    gamecanvas.create_line(left_up, right_up, fill='black')
+    #gamecanvas.create_line(left_up, right_up, fill='black')
 def draw_grass(x,y, gamecanvas):
     left_up =    [y-0,x-16]
     right_up =   [y+32,x-16]

@@ -338,6 +338,19 @@ def draw_roof(x,y, gamecanvas):
     right_down = [y+32,x+16]
     gamecanvas.create_rectangle(left_down, right_up, fill='gray70', outline='gray70')
     #gamecanvas.create_line(left_up, right_up, fill='black')
+def draw_head_roof(x,y, gamecanvas):
+    left_up =    [y-0,x-16]
+    right_up =   [y+32,x-16]
+    left_down =  [y-0,x+16]
+    right_down = [y+32,x+16]
+    gamecanvas.create_rectangle(left_down, right_up, fill='gray70', outline='gray70')
+    gamecanvas.create_line(left_up, right_up, fill='grey80')
+    gamecanvas.create_line(left_up[0],left_up[1]+0, right_up[0], right_up[1]+0, fill=grey[20])
+    gamecanvas.create_line(left_up[0],left_up[1]+1, right_up[0], right_up[1]+1, fill=grey[30])
+    gamecanvas.create_line(left_up[0],left_up[1]+2, right_up[0], right_up[1]+2, fill=grey[40])
+    gamecanvas.create_line(left_up[0],left_up[1]+3, right_up[0], right_up[1]+3, fill=grey[50])
+    gamecanvas.create_line(left_up[0],left_up[1]+4, right_up[0], right_up[1]+4, fill=grey[60])
+    gamecanvas.create_line(left_up[0],left_up[1]+5, right_up[0], right_up[1]+5, fill=grey[65])
 def draw_grass(x,y, gamecanvas):
     left_up =    [y-0,x-16]
     right_up =   [y+32,x-16]
@@ -380,7 +393,10 @@ def draw_on_canvas(current_map, gamecanvas):
         draw_roof(i_x*32, (len(sublist)+1)*32, gamecanvas)
         i_x = i_x+1
     for i_y in range(len(current_map[0])):
-        draw_roof(i_x*32, (i_y+1)*32, gamecanvas)
+        if not current_map[-1][i_y] == '#':
+            draw_head_roof(i_x*32, (i_y+1)*32, gamecanvas)
+        else:
+            draw_roof(i_x*32, (i_y+1)*32, gamecanvas)
     draw_roof(i_x*32, 0, gamecanvas)
     draw_roof(i_x*32, (len(current_map[0])+1)*32, gamecanvas)
 # Draw Sprites

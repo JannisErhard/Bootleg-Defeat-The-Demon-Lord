@@ -273,7 +273,13 @@ class hero_sprite:
         self.lefteyeid = gamecanvas.create_line(center[0]-6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
         self.righteyeid = gamecanvas.create_line(center[0]+6, center[1]-11, center[0], center[1]-5, fill = 'black', width = 2)
         self.noseid = gamecanvas.create_rectangle(center[0]-2, center[1]-4, center[0]+2, center[1], fill='tan1',outline='black')
-
+    def face_down_experimental(self, center, gamecanvas):  # top coordinate in gimp is first coordinate in here
+        top_corner = [0]*2
+        top_corner[0], top_corner[1] = center[0]-16, center[1]-16
+        self.headid = gamecanvas.create_rectangle(top_corner[0], top_corner[1],top_corner[0]+32, top_corner[1]+32, fill = 'white')
+        self.bodyid = gamecanvas.create_rectangle(top_corner[0]+8, top_corner[1]+8,top_corner[0]+24, top_corner[1]+21, fill = 'white')
+        self.bodyid = gamecanvas.create_rectangle(top_corner[0]+12, top_corner[1]+1,top_corner[0]+20, top_corner[1]+9, fill = 'white')
+        self.legsid = gamecanvas.create_rectangle(top_corner[0]+12, top_corner[1]+21,top_corner[0]+20, top_corner[1]+30, fill = 'white')
 
 def draw_wall(x,y, gamecanvas):
     left_up =    [y-0,x-16]
@@ -330,6 +336,10 @@ def draw_wall(x,y, gamecanvas):
     gamecanvas.create_line(y+16,x+10,y+16 ,x+15,fill=grey[20])
     gamecanvas.create_line(y+17,x+10,y+17 ,x+15,fill=grey[50])
     gamecanvas.create_line(y+18,x+10,y+18 ,x+15,fill=grey[70])
+    #middle column
+    gamecanvas.create_line(y+8,x+10,y+8 ,x+15,fill=grey[20])
+    gamecanvas.create_line(y+9,x+10,y+9 ,x+15,fill=grey[50])
+    gamecanvas.create_line(y+10,x+10,y+10 ,x+15,fill=grey[70])
 
 def draw_roof(x,y, gamecanvas):
     left_up =    [y-0,x-16]

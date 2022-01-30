@@ -343,65 +343,41 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
         to_check_y, to_check_x = player_y+1, player_x+1 
         if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
             if np_field[to_check_x, to_check_y] == 'E':
-                if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                elif i == 'F' and np_field[player_x, player_y] == '^':
+                if i == 'F' and np_field[player_x, player_y] in '<^':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
                     HP -= max(0,(2-vert))
             if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                elif i == 'F' and np_field[player_x, player_y] == '^':
+                if i == 'F' and np_field[player_x, player_y] in '<^':
                     if debug: print(Flavor_Text_1, max(0,(3-vert)))
                     HP -= max(0,(3-vert))
         to_check_x, to_check_y = player_x-1, player_y-1 
         if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
             if np_field[to_check_x, to_check_y] == 'E':
-                if i == 'F' and np_field[player_x, player_y] == '>':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                elif i == 'F' and np_field[player_x, player_y] == 'v':
+                if i == 'F' and np_field[player_x, player_y] in '>v':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
                     HP -= max(0,(2-vert))
             if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] == '>':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                elif i == 'F' and np_field[player_x, player_y] == 'v':
+                if i == 'F' and np_field[player_x, player_y] in '>v':
                     if debug: print(Flavor_Text_1, max(0,(3-vert)))
                     HP -= max(0,(3-vert))
         to_check_x, to_check_y = player_x+1, player_y-1 
         if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
             if np_field[to_check_x, to_check_y] == 'E':
-                if i == 'F' and np_field[player_x, player_y] == '>':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                elif i == 'F' and np_field[player_x, player_y] == '^':
+                if i == 'F' and np_field[player_x, player_y] in '>^':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
                     HP -= max(0,(2-vert))
             if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] == '>':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                if i == 'F' and np_field[player_x, player_y] == '^':
+                if i == 'F' and np_field[player_x, player_y] in '>^':
                     if debug: print(Flavor_Text_1, max(0,(3-vert)))
                     HP -= max(0,(3-vert))
         to_check_y, to_check_x = player_y+1, player_x-1 
         if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
             if np_field[to_check_x, to_check_y] == 'E':
-                if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                elif i == 'F' and np_field[player_x, player_y] == 'v':
+                if i == 'F' and np_field[player_x, player_y] in '<v':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
                     HP -= max(0,(2-vert))
             if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                if i == 'F' and np_field[player_x, player_y] == 'v':
+                if i == 'F' and np_field[player_x, player_y] in '<v':
                     if debug: print(Flavor_Text_1, max(0,(3-vert)))
                     HP -= max(0,(3-vert))
     for i in range(0,x_len):

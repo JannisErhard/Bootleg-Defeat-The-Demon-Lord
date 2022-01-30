@@ -20,7 +20,7 @@ global first_map, HP, attk, defn, bag, HP_Demon_Lord, debug, msg, stage, max_lev
 global map_width, extended_map_height
 global legacy
 map_width , extended_map_height = int(), int()
-attk, defn, HP, exp, HP_Demon_Lord   = 1, 1, 3, 0, 10
+attk, defn, HP, exp, HP_Demon_Lord   = 1, 1,3, 0, 10
 msg = "Game Start"
 
 bag = []

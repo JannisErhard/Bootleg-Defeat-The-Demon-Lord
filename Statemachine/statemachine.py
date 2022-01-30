@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+monster = {'E' : 2, 'D' : 3}
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug): 
     HIT_BOX='^v<>HAKC'
     Flavor_Text_1="The Demon Lord bends you over and gives you a good spanking for:"
@@ -341,45 +342,29 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("Player avoids the attack.")
         to_check_y, to_check_x = player_y+1, player_x+1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
-            if np_field[to_check_x, to_check_y] == 'E':
+        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Down Right
+            if np_field[to_check_x, to_check_y] in 'ED':
                 if i == 'F' and np_field[player_x, player_y] in '<^':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-            if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] in '<^':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-        to_check_x, to_check_y = player_x-1, player_y-1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
-            if np_field[to_check_x, to_check_y] == 'E':
+                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
+        to_check_y, to_check_x = player_y-1, player_x-1 
+        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Up Left
+            if np_field[to_check_x, to_check_y] in 'ED':
                 if i == 'F' and np_field[player_x, player_y] in '>v':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-            if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] in '>v':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-        to_check_x, to_check_y = player_x+1, player_y-1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
-            if np_field[to_check_x, to_check_y] == 'E':
+                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
+        to_check_y, to_check_x = player_y-1, player_x+1 
+        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Down Left
+            if np_field[to_check_x, to_check_y] in 'ED':
                 if i == 'F' and np_field[player_x, player_y] in '>^':
                     if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-            if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] in '>^':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
+                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
         to_check_y, to_check_x = player_y+1, player_x-1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO from right and down
-            if np_field[to_check_x, to_check_y] == 'E':
+        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Up Right 
+            if np_field[to_check_x, to_check_y] in 'ED':
                 if i == 'F' and np_field[player_x, player_y] in '<v':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-            if np_field[to_check_x,to_check_y] == 'D':
-                if i == 'F' and np_field[player_x, player_y] in '<v':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
+                    if debug: print(Flavor_Text_2, max(0,(monster[np_field[to_check_x, to_check_y]]-vert)))
+                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
     for i in range(0,x_len):
         sublist =[np_field[:][i]]
         map_back.append(list(np_field[:][i]))

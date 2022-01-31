@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 import numpy as np
 monster = {'E' : 2, 'D' : 3}
+
+def boundscheck(x,y,field):
+    return -1 < x <= field.shape[1] and -1 < y <= field.shape[0] 
+
+def AOO_check(position, field, vert):
+    a, b = [1,0,-1,0], [0,1,0,-1]
+    damage = 0
+    for inc_x, inc_y in zip(a,b):
+        x,y = position[0]+inc_x, position[1]+inc_y
+        if boundscheck(x,y,field):
+            if field[x,y] in "ED":
+                print(f'AOO of {field[x,y]} from {x,y} while hero was at {position[0],position[1]}')
+                damage += max(0,(monster[field[x,y]]-vert)) 
+    return damage 
+
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug): 
     HIT_BOX='^v<>HAKC'
     Flavor_Text_1="The Demon Lord bends you over and gives you a good spanking for:"
@@ -35,9 +50,9 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
             break
         if i in 'KCH':
             if i not in bag:
-                pass
+                pass # orginally resulted in death
             else:
-                if i == 'H':
+                if i == 'H': # resulted in death when HP was full
                    HP = 3
                    bag.remove('H')
                 if i == 'K':
@@ -64,8 +79,8 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                             np_field[player_x, player_y-1]  = ' '
                             key_success = True
                     if not key_success:
-                        pass 
-                if i == 'C':#TODO: unlock doors left right down, unclear: nec. 2 face door ?
+                        pass # originally resulted in death 
+                if i == 'C':
                     if debug: print("I use Coin!")
                     commerce_success = False
                     if player_y-1 >= 0:
@@ -116,6 +131,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("I hit nothing ...")
                     break
+                    #return None
             if np_field[player_x,player_y] == '^':
                 if debug: print("I strike up")
                 if  np_field[player_x-1,player_y] == 'E':
@@ -130,7 +146,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("I hit nothing ...")
                     break
-                    return None
+                    #return None
             if np_field[player_x,player_y] == 'v':
                 if debug: print("I strike down")
                 if  np_field[player_x+1,player_y] == 'E':
@@ -143,9 +159,9 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     if HP_Demon_Lord <= 0:
                         np_field[player_x+1, player_y] = ' '
                 else:
-                    #return None
                     if debug: print("I hit nothing ...")
                     break
+                    #return None
             if np_field[player_x,player_y] == '<':
                 if debug: print("I strike to the left")
                 if  np_field[player_x,player_y-1] == 'E':
@@ -158,9 +174,9 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     if HP_Demon_Lord <= 0:
                         np_field[player_x, player_y-1] = ' '
                 else:
-                    #return None
                     if debug: print("I hit nothing ...")
                     break
+                    #return None
             if exp == 3:
                 attk += 1
                 exp = 0
@@ -171,6 +187,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
             np_field[np.where(np_field == ">")]=str(i)
             np_field[np.where(np_field == "v")]=str(i)
         if i == 'F':
+            HP -= AOO_check([player_x, player_y], np_field, vert)
             if debug: print("I move facing ", np_field[player_x,player_y])
             if np.isin('^', np_field):
                 player_x, player_y = map(int, np.where(np_field == '^'))
@@ -243,6 +260,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                         player_y -= 1
                 else: 
                     player_y -= 1
+# check wether enemies may attack, normal attacks as well as attacks of opportunity
         if player_x-1 >= 0: 
             if np_field[player_x-1,player_y] == 'D':
                 if i in HIT_BOX:
@@ -321,30 +339,6 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     HP -= max(0,(monster[np_field[player_x, player_y+2]]-vert))
                 else:
                     if debug: print("Player avoids the attack.")
-        to_check_y, to_check_x = player_y+1, player_x+1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Down Right
-            if np_field[to_check_x, to_check_y] in 'ED':
-                if i == 'F' and np_field[player_x, player_y] in '<^':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
-        to_check_y, to_check_x = player_y-1, player_x-1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Up Left
-            if np_field[to_check_x, to_check_y] in 'ED':
-                if i == 'F' and np_field[player_x, player_y] in '>v':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
-        to_check_y, to_check_x = player_y-1, player_x+1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Down Left
-            if np_field[to_check_x, to_check_y] in 'ED':
-                if i == 'F' and np_field[player_x, player_y] in '>^':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
-        to_check_y, to_check_x = player_y+1, player_x-1 
-        if 0 <= to_check_y < y_len and 0 <= to_check_x < x_len: #AOO Up Right 
-            if np_field[to_check_x, to_check_y] in 'ED':
-                if i == 'F' and np_field[player_x, player_y] in '<v':
-                    if debug: print(Flavor_Text_2, max(0,(monster[np_field[to_check_x, to_check_y]]-vert)))
-                    HP -= max(0,(monster[np_field[to_check_x, to_check_y]]-vert))
     for i in range(0,x_len):
         sublist =[np_field[:][i]]
         map_back.append(list(np_field[:][i]))

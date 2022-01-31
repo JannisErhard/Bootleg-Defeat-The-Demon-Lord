@@ -42,32 +42,26 @@ def strike(position, field, ornt, attk, exp, HP_Demon_Lord):
         pass
     return field, exp, HP_Demon_Lord
 
-def try_use_key(position, field, bag):
-    a, b = [1,0,-1,0], [0,1,0,-1]
+def try_use_key(position, ornt, field, bag):
     success = False
-    for inc_x, inc_y in zip(a,b):
-        x,y = position[0]+inc_x, position[1]+inc_y
-        if boundscheck(x,y,field):
-            if field[x,y] in "-|":
-                bag.remove('K')
-                field[x, y]  = ' '
-                success = True
-                break
+    x,y = position[0]+configs[ornt][0],position[1]+configs[ornt][1]
+    if boundscheck(x,y,field):
+        if field[x,y] in "-|":
+            bag.remove('K')
+            field[x, y]  = ' '
+            success = True
     return success, field, bag
 
-def try_use_coin(position, field, bag, receipts):
-    a, b = [1,0,-1,0], [0,1,0,-1]
+def try_use_coin(position, ornt,field, bag, receipts):
     success = False
-    for inc_x, inc_y in zip(a,b):
-        x,y = position[0]+inc_x, position[1]+inc_y
-        if boundscheck(x,y,field):
-            if field[x,y] in "M":
-                bag.remove('C')
-                receipts[x][y]+=1
-                if receipts[x][y] == 3:
-                    field[x, y]  = ' '
-                success = True
-                break
+    x,y = position[0]+configs[ornt][0],position[1]+configs[ornt][1]
+    if boundscheck(x,y,field):
+        if field[x,y] in "M":
+            bag.remove('C')
+            receipts[x][y]+=1
+            if receipts[x][y] == 3:
+                field[x, y]  = ' '
+            success = True
     return success, field, bag, receipts
 
 def encounter_check(position, field, vert):
@@ -119,12 +113,12 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                    bag.remove('H')
                 if i == 'K':
                     if debug: print("I use Key!")
-                    key_success, np_field, bag = try_use_key([player_x, player_y], np_field, bag)
+                    key_success, np_field, bag = try_use_key([player_x, player_y], np_field[player_x, player_y], np_field, bag)
                     if not key_success:
                         pass # originally resulted in death 
                 if i == 'C':
                     if debug: print("I use Coin!")
-                    commerce_success, np_field, bag, receipts_and_deleted_tweets = try_use_coin([player_x, player_y], np_field, bag, receipts_and_deleted_tweets)
+                    commerce_success, np_field, bag, receipts_and_deleted_tweets = try_use_coin([player_x, player_y],np_field[player_x, player_y], np_field, bag, receipts_and_deleted_tweets)
                     if not commerce_success:
                         #if debug: print("I dropped coin, that  incident kiled me...") 
                         #return None

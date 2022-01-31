@@ -17,9 +17,6 @@ def AOO_check(position, field, vert):
     return damage 
 
 def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, HP_Demon_Lord, debug): 
-    HIT_BOX='^v<>HAKC'
-    Flavor_Text_1="The Demon Lord bends you over and gives you a good spanking for:"
-    Flavor_Text_2="One of the Demon Lord lackys scratches you for:"
     if debug: print(field)
     
     np_field  = np.asarray(field)
@@ -261,7 +258,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else: 
                     player_y -= 1
 # check wether enemies may attack
-        if i in HIT_BOX:
+        if i != 'F':
             HP -= AOO_check([player_x, player_y], np_field, vert)
     for i in range(0,x_len):
         sublist =[np_field[:][i]]

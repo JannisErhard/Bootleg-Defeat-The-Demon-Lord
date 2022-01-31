@@ -1,13 +1,33 @@
 #!/usr/bin/env python3
+# records 261, 247, 201, 154  
 import numpy as np
 monster = {'E' : 2, 'D' : 3}
+configs = {'v' : [1, 0],'>' : [0, 1], '^' : [-1, 0], '<' : [0, -1]}
 
 def boundscheck(x,y,field):
     return -1 < x < field.shape[0] and -1 < y < field.shape[1] 
 
+def move(position, field, ornt, attk, vert, bag):
+        x, y = position[0] + configs[ornt][0], position[1] + configs[ornt][1]
+        if boundscheck(x,y,field):
+            if not field[x,y] in '#ED-M':
+                if field[x,y] in 'KCH':
+                    bag.append(field[x,y])
+                if field[x,y] == 'S':
+                    vert += 1
+                if field[x,y] == 'X':
+                    attk += 1
+                field[position[0], position[1]] = ' '
+                field[x, y] = ornt
+            else:
+                pass
+            return x, y, field, attk, vert, bag
+        else: 
+            return position[0], position[1], field, attk, vert, bag
+
+
 def strike(position, field, ornt, attk, exp, HP_Demon_Lord):
-    configs = {'v' : [1, 0],'>' : [0, 1], '^' : [-1, 0], '<' : [0, -1]}
-    if boundscheck(position[0]+configs[ornt][0],position[1]+configs[ornt][1], field)
+    if boundscheck(position[0]+configs[ornt][0],position[1]+configs[ornt][1], field):
         print(f'I strike {ornt} onto {field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]]} and {position[0]+configs[ornt][0],position[1]+configs[ornt][1]}' )
         if field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'E':
             exp += 1
@@ -89,7 +109,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
     for i in actions:
         if HP <= 0:
             break
-        if i in 'KCH':
+        if i in 'KCH': # item use cases 
             if i not in bag:
                 pass # orginally resulted in death
             else:
@@ -123,77 +143,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
         if i == 'F':
             HP -= encounter_check([player_x, player_y], np_field, vert)
             if debug: print("I move facing ", np_field[player_x,player_y])
-            if np.isin('^', np_field):
-                player_x, player_y = map(int, np.where(np_field == '^'))
-                player_x -= 1
-                if not player_x < 0 and not str(np_field[player_x,player_y]) in '#ED-M':
-                    if str(np_field[player_x,player_y]) in 'KCH':
-                        if debug: print("I find", np_field[player_x,player_y])
-                        bag.append(str(np_field[player_x,player_y]))
-                    if str(np_field[player_x,player_y]) in 'S':
-                        if debug: print("I find shield!")
-                        vert += 1
-                    if str(np_field[player_x,player_y]) in 'X':
-                        if debug: print("I find STEROIDS!")
-                        attk += 1
-                    np_field[player_x+1, player_y] = ' '
-                    np_field[player_x, player_y] = '^'
-                else:
-                    player_x += 1
-            if np.isin('v', np_field):
-                player_x, player_y = map(int, np.where(np_field == 'v'))
-                player_x += 1
-                if not player_x == x_len and not  str(np_field[player_x,player_y]) in '#ED-M':
-                    if str(np_field[player_x,player_y]) in 'KCH':
-                        if debug: print("I find", np_field[player_x,player_y])
-                        bag.append(str(np_field[player_x,player_y]))
-                    if str(np_field[player_x,player_y]) in 'S':
-                        if debug: print("I find shield!")
-                        vert += 1
-                    if str(np_field[player_x,player_y]) in 'X':
-                        if debug: print("I find STEROIDS!")
-                        attk += 1
-                    np_field[player_x-1, player_y] = ' '
-                    np_field[player_x, player_y] = 'v'
-                else:
-                    player_x -= 1
-            if np.isin('<', np_field):
-                player_x, player_y = map(int, np.where(np_field == '<'))
-                player_y -= 1
-                if not player_y < 0 and not str(np_field[player_x,player_y]) in '#ED|M':
-                    if str(np_field[player_x,player_y]) in 'KCH':
-                        if debug: print("I find", np_field[player_x,player_y])
-                        bag.append(str(np_field[player_x,player_y]))
-                    if str(np_field[player_x,player_y]) in 'S':
-                        if debug: print("I find shield!")
-                        vert += 1
-                    if str(np_field[player_x,player_y]) in 'X':
-                        if debug: print("I find STEROIDS!")
-                        attk += 1
-                    np_field[player_x, player_y+1] = ' '
-                    np_field[player_x, player_y] = '<'
-                else:
-                    player_y += 1
-            if np.isin('>', np_field):
-                player_x, player_y = map(int, np.where(np_field == '>'))
-                player_y += 1
-                if not player_y >= y_len: 
-                    if not str(np_field[player_x,player_y]) in '#ED|M':
-                        if str(np_field[player_x,player_y]) in 'KCH':
-                            if debug: print("I find", np_field[player_x,player_y])
-                            bag.append(str(np_field[player_x,player_y]))
-                        if str(np_field[player_x,player_y]) in 'S':
-                            if debug: print("I find shield!")
-                            vert += 1
-                        if str(np_field[player_x,player_y]) in 'X':
-                            if debug: print("I find STEROIDS!")
-                            attk += 1
-                        np_field[player_x, player_y-1] = ' '
-                        np_field[player_x, player_y] = '>'
-                    else :
-                        player_y -= 1
-                else: 
-                    player_y -= 1
+            player_x, player_y, np_field, attk , vert, bag = move([player_x, player_y], np_field, np_field[player_x, player_y], attk, vert, bag)
 # check wether enemies may attack
         if i != 'F':
             HP -= encounter_check([player_x, player_y], np_field, vert)

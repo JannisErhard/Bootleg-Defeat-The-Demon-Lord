@@ -5,14 +5,42 @@ monster = {'E' : 2, 'D' : 3}
 def boundscheck(x,y,field):
     return -1 < x < field.shape[0] and -1 < y < field.shape[1] 
 
-def AOO_check(position, field, vert):
+
+def try_use_key(position, field, bag):
+    a, b = [1,0,-1,0], [0,1,0,-1]
+    success = False
+    for inc_x, inc_y in zip(a,b):
+        x,y = position[0]+inc_x, position[1]+inc_y
+        if boundscheck(x,y,field):
+            if field[x,y] in "-|":
+                bag.remove('K')
+                field[x, y]  = ' '
+                success = True
+                break
+    return success, field, bag
+
+def try_use_coin(position, field, bag, receipts):
+    a, b = [1,0,-1,0], [0,1,0,-1]
+    success = False
+    for inc_x, inc_y in zip(a,b):
+        x,y = position[0]+inc_x, position[1]+inc_y
+        if boundscheck(x,y,field):
+            if field[x,y] in "M":
+                bag.remove('C')
+                if receipts[x][y] == 3:
+                    field[player_x, player_y-1]  = ' '
+                success = True
+                break
+    return success, field, bag, receipts
+
+def encounter_check(position, field, vert):
     a, b = [1,0,-1,0], [0,1,0,-1]
     damage = 0
     for inc_x, inc_y in zip(a,b):
         x,y = position[0]+inc_x, position[1]+inc_y
         if boundscheck(x,y,field):
             if field[x,y] in "ED":
-                print(f'AOO of {field[x,y]} from {x,y} while hero was at {position[0],position[1]}')
+                print(f'Attack of {field[x,y]} from {x,y} while hero was at {position[0],position[1]}')
                 damage += max(0,(monster[field[x,y]]-vert)) 
     return damage 
 
@@ -54,27 +82,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                    bag.remove('H')
                 if i == 'K':
                     if debug: print("I use Key!")
-                    key_success = False
-                    if player_x-1 >= 0:
-                        if np_field[player_x-1, player_y] == '-':
-                            bag.remove('K')
-                            np_field[player_x-1, player_y]  = ' '
-                            key_success = True
-                    if player_x+1 < x_len:
-                        if np_field[player_x+1, player_y] == '-':
-                            bag.remove('K')
-                            np_field[player_x+1, player_y]  = ' '
-                            key_success = True
-                    if player_y+1 < y_len:
-                        if np_field[player_x, player_y+1] == '|':
-                            bag.remove('K')
-                            np_field[player_x, player_y+1]  = ' '
-                            key_success = True
-                    if player_y-1 >= 0:
-                        if np_field[player_x, player_y-1] == '|':
-                            bag.remove('K')
-                            np_field[player_x, player_y-1]  = ' '
-                            key_success = True
+                    key_success, np_field, bag = try_use_key([player_x, player_y], np_field, bag)
                     if not key_success:
                         pass # originally resulted in death 
                 if i == 'C':
@@ -111,7 +119,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     if not commerce_success:
                         #if debug: print("I dropped coin, that  incident kiled me...") 
                         #return None
-                        break
+                        pass
         if i == 'A':
             if debug: print("I attack")
             if np_field[player_x,player_y] == '>':
@@ -184,7 +192,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
             np_field[np.where(np_field == ">")]=str(i)
             np_field[np.where(np_field == "v")]=str(i)
         if i == 'F':
-            HP -= AOO_check([player_x, player_y], np_field, vert)
+            HP -= encounter_check([player_x, player_y], np_field, vert)
             if debug: print("I move facing ", np_field[player_x,player_y])
             if np.isin('^', np_field):
                 player_x, player_y = map(int, np.where(np_field == '^'))
@@ -259,7 +267,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     player_y -= 1
 # check wether enemies may attack
         if i != 'F':
-            HP -= AOO_check([player_x, player_y], np_field, vert)
+            HP -= encounter_check([player_x, player_y], np_field, vert)
     for i in range(0,x_len):
         sublist =[np_field[:][i]]
         map_back.append(list(np_field[:][i]))

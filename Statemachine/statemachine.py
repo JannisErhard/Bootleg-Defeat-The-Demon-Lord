@@ -7,16 +7,19 @@ def boundscheck(x,y,field):
 
 def strike(position, field, ornt, attk, exp, HP_Demon_Lord):
     configs = {'v' : [1, 0],'>' : [0, 1], '^' : [-1, 0], '<' : [0, -1]}
-    print(f'I strike {ornt} onto {field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]]} and {position[0]+configs[ornt][0],position[1]+configs[ornt][1]}' )
-    if field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'E':
-        exp += 1
-        field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] = ' ' 
-    elif field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'D':
-        HP_Demon_Lord -= attk
-        if HP_Demon_Lord <= 0:
+    if boundscheck(position[0]+configs[ornt][0],position[1]+configs[ornt][1], field)
+        print(f'I strike {ornt} onto {field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]]} and {position[0]+configs[ornt][0],position[1]+configs[ornt][1]}' )
+        if field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'E':
+            exp += 1
             field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] = ' ' 
-    else: 
-        pass 
+        elif field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'D':
+            HP_Demon_Lord -= attk
+            if HP_Demon_Lord <= 0:
+                field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] = ' ' 
+        else: # no enemy there to hit
+            pass
+    else: # out of bounds 
+        pass
     return field, exp, HP_Demon_Lord
 
 def try_use_key(position, field, bag):

@@ -260,57 +260,9 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                         player_y -= 1
                 else: 
                     player_y -= 1
-# check wether enemies may attack, normal attacks as well as attacks of opportunity
-        if player_x-1 >= 0: 
-            if np_field[player_x-1,player_y] == 'D':
-                if i in HIT_BOX:
-                    if debug: print("The Demon Lord bends you over and gives you a good spanking for", max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x-1,player_y] == 'E':
-                if i in HIT_BOX:
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-        if player_x+1 < x_len:
-            if np_field[player_x+1,player_y] == 'D':
-                if i in HIT_BOX:
-                    if debug: print("The Demon Lord bends you over and gives you a good spanking for", max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x+1,player_y] == 'E':
-                if i in HIT_BOX:
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-        if player_y-1 >= 0:
-            if np_field[player_x,player_y-1] == 'D':
-                if i in HIT_BOX:
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x,player_y-1] == 'E':
-                if i in HIT_BOX:
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-        if player_y+1 < y_len:
-            if np_field[player_x,player_y+1] == 'D':
-                if i in HIT_BOX:
-                    if debug: print("The Demon Lord bends you over and gives you a good spanking for", max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x,player_y+1] == 'E':
-                if i in HIT_BOX:
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
+# check wether enemies may attack
+        if i in HIT_BOX:
+            HP -= AOO_check([player_x, player_y], np_field, vert)
     for i in range(0,x_len):
         sublist =[np_field[:][i]]
         map_back.append(list(np_field[:][i]))

@@ -257,16 +257,10 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("Player avoids the attack.")
         if player_x-2 >= 0: 
-            if np_field[player_x-2,player_y] == 'D':
+            if np_field[player_x-2,player_y] in 'ED':
                 if i == "F" and np_field[player_x,player_y] == 'v':
-                    if debug: print("The Demon Lord bends you over and gives you a good spanking for", max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x-2,player_y] == 'E':
-                if i == "F" and np_field[player_x,player_y] == 'v':
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
+                    if debug: print(Flavor_Text_1, max(0,(monster[np_field[player_x-2, player_y]]-vert)))
+                    HP -= max(0,(monster[np_field[player_x-2, player_y]]-vert))
                 else:
                     if debug: print("Player avoids the attack.")
         if player_x+1 < x_len:
@@ -283,16 +277,10 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("Player avoids the attack.")
         if player_x+2 < x_len:
-            if np_field[player_x+2,player_y] == 'D':
+            if np_field[player_x+2,player_y] in 'ED':
                 if i == "F" and np_field[player_x,player_y] == '^':
-                    if debug: print("The Demon Lord bends you over and gives you a good spanking for", max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-                else:
-                    if debug: print("Player avoids the attack.")
-            if np_field[player_x+2,player_y] == 'E':
-                if i == "F" and np_field[player_x,player_y] == '^':
-                    if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
+                    if debug: print(Flavor_Text_1, max(0,(monster[np_field[player_x+2, player_y]]-vert)))
+                    HP -= max(0,(monster[np_field[player_x+2, player_y]]-vert))
                 else:
                     if debug: print("Player avoids the attack.")
         if player_y-1 >= 0:
@@ -307,14 +295,10 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                     if debug: print("One of the Demon Lord lackys scratches you for", max(0,(2-vert)))
                     HP -= max(0,(2-vert))
         if player_y-2 >= 0:
-            if np_field[player_x,player_y-2] == 'D':
+            if np_field[player_x,player_y-2] in 'ED':
                 if i == "F" and np_field[player_x,player_y] == '>':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
-            if np_field[player_x,player_y-2] == 'E':
-                if i == "F" and np_field[player_x,player_y] == '>':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
+                    if debug: print(Flavor_Text_1, max(0,(monster[np_field[player_x, player_y-2]]-vert)))
+                    HP -= max(0,(monster[np_field[player_x, player_y-2]]-vert))
                 else:
                     if debug: print("Player avoids the attack.")
         if player_y+1 < y_len:
@@ -331,14 +315,10 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                 else:
                     if debug: print("Player avoids the attack.")
         if player_y+2 < y_len:
-            if np_field[player_x,player_y+2] == 'E':
+            if np_field[player_x,player_y+2] in 'ED':
                 if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_2, max(0,(2-vert)))
-                    HP -= max(0,(2-vert))
-            if np_field[player_x,player_y+2] == 'D':
-                if i == 'F' and np_field[player_x, player_y] == '<':
-                    if debug: print(Flavor_Text_1, max(0,(3-vert)))
-                    HP -= max(0,(3-vert))
+                    if debug: print(Flavor_Text_2, max(0,(monster[np_field[player_x, player_y+2]]-vert)))
+                    HP -= max(0,(monster[np_field[player_x, player_y+2]]-vert))
                 else:
                     if debug: print("Player avoids the attack.")
         to_check_y, to_check_x = player_y+1, player_x+1 

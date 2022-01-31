@@ -63,8 +63,9 @@ def try_use_coin(position, field, bag, receipts):
         if boundscheck(x,y,field):
             if field[x,y] in "M":
                 bag.remove('C')
+                receipts[x][y]+=1
                 if receipts[x][y] == 3:
-                    field[player_x, player_y-1]  = ' '
+                    field[x, y]  = ' '
                 success = True
                 break
     return success, field, bag, receipts
@@ -144,8 +145,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
             HP -= encounter_check([player_x, player_y], np_field, vert)
             if debug: print("I move facing ", np_field[player_x,player_y])
             player_x, player_y, np_field, attk , vert, bag = move([player_x, player_y], np_field, np_field[player_x, player_y], attk, vert, bag)
-# check wether enemies may attack
-        if i != 'F':
+        if i != 'F': # enemy turn, after all player action, only if player hasnt moved.
             HP -= encounter_check([player_x, player_y], np_field, vert)
     for i in range(0,x_len):
         sublist =[np_field[:][i]]

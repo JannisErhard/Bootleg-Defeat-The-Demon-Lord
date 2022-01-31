@@ -87,35 +87,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                         pass # originally resulted in death 
                 if i == 'C':
                     if debug: print("I use Coin!")
-                    commerce_success = False
-                    if player_y-1 >= 0:
-                        if np_field[player_x, player_y-1] == 'M':
-                            bag.remove('C')
-                            receipts_and_deleted_tweets[player_x][player_y-1] += 1
-                            if receipts_and_deleted_tweets[player_x][player_y-1] == 3:
-                                np_field[player_x, player_y-1]  = ' '
-                            commerce_success = True
-                    if player_y+1 < y_len:
-                        if np_field[player_x, player_y+1] == 'M':
-                            bag.remove('C')
-                            receipts_and_deleted_tweets[player_x][player_y+1] += 1
-                            if receipts_and_deleted_tweets[player_x][player_y+1] == 3:
-                                np_field[player_x, player_y+1]  = ' '
-                            commerce_success = True
-                    if player_x+1 < x_len:
-                        if np_field[player_x+1, player_y] == 'M':
-                            bag.remove('C')
-                            receipts_and_deleted_tweets[player_x+1][player_y] += 1
-                            if receipts_and_deleted_tweets[player_x+1][player_y] == 3:
-                                np_field[player_x+1, player_y]  = ' '
-                            commerce_success = True
-                    if player_x-1 >= 0:
-                        if np_field[player_x-1, player_y] == 'M':
-                            bag.remove('C')
-                            receipts_and_deleted_tweets[player_x-1][player_y] += 1
-                            if receipts_and_deleted_tweets[player_x-1][player_y] == 3:
-                                np_field[player_x-1, player_y]  = ' '
-                            commerce_success = True
+                    commerce_success, np_field, bag, receipts_and_deleted_tweets = try_use_coin([player_x, player_y], np_field, bag, receipts_and_deleted_tweets)
                     if not commerce_success:
                         #if debug: print("I dropped coin, that  incident kiled me...") 
                         #return None

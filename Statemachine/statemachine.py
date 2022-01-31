@@ -5,6 +5,19 @@ monster = {'E' : 2, 'D' : 3}
 def boundscheck(x,y,field):
     return -1 < x < field.shape[0] and -1 < y < field.shape[1] 
 
+def strike(position, field, ornt, attk, exp, HP_Demon_Lord):
+    configs = {'v' : [1, 0],'>' : [0, 1], '^' : [-1, 0], '<' : [0, -1]}
+    print(f'I strike {ornt} onto {field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]]} and {position[0]+configs[ornt][0],position[1]+configs[ornt][1]}' )
+    if field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'E':
+        exp += 1
+        field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] = ' ' 
+    elif field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] == 'D':
+        HP_Demon_Lord -= attk
+        if HP_Demon_Lord <= 0:
+            field[position[0]+configs[ornt][0],position[1]+configs[ornt][1]] = ' ' 
+    else: 
+        pass 
+    return field, exp, HP_Demon_Lord
 
 def try_use_key(position, field, bag):
     a, b = [1,0,-1,0], [0,1,0,-1]
@@ -94,66 +107,7 @@ def rpg(field,  actions, attk, vert, HP, exp, bag, receipts_and_deleted_tweets, 
                         pass
         if i == 'A':
             if debug: print("I attack")
-            if np_field[player_x,player_y] == '>':
-                if debug: print("I strike to the right")
-                if  np_field[player_x,player_y+1] == 'E':
-                    if debug: print("Target is hit")
-                    exp += 1
-                    np_field[player_x, player_y+1] = ' '
-                elif  np_field[player_x,player_y+1] == 'D':
-                    if debug: print("Demon Lord is hit")
-                    HP_Demon_Lord -= attk
-                    if HP_Demon_Lord <= 0:
-                        np_field[player_x, player_y+1] = ' '
-                else:
-                    if debug: print("I hit nothing ...")
-                    break
-                    #return None
-            if np_field[player_x,player_y] == '^':
-                if debug: print("I strike up")
-                if  np_field[player_x-1,player_y] == 'E':
-                    if debug: print("Target is hit")
-                    exp += 1
-                    np_field[player_x-1, player_y] = ' '
-                elif  np_field[player_x-1,player_y] == 'D':
-                    if debug: print("Demon Lord is hit")
-                    HP_Demon_Lord -= attk
-                    if HP_Demon_Lord <= 0:
-                        np_field[player_x-1, player_y] = ' '
-                else:
-                    if debug: print("I hit nothing ...")
-                    break
-                    #return None
-            if np_field[player_x,player_y] == 'v':
-                if debug: print("I strike down")
-                if  np_field[player_x+1,player_y] == 'E':
-                    if debug: print("Target is hit")
-                    exp += 1
-                    np_field[player_x+1, player_y] = ' '
-                elif  np_field[player_x+1,player_y] == 'D':
-                    if debug: print("Demon Lord is hit")
-                    HP_Demon_Lord -= attk
-                    if HP_Demon_Lord <= 0:
-                        np_field[player_x+1, player_y] = ' '
-                else:
-                    if debug: print("I hit nothing ...")
-                    break
-                    #return None
-            if np_field[player_x,player_y] == '<':
-                if debug: print("I strike to the left")
-                if  np_field[player_x,player_y-1] == 'E':
-                    if debug: print("Target is hit")
-                    exp += 1
-                    np_field[player_x, player_y-1] = ' '
-                elif  np_field[player_x,player_y-1] == 'D':
-                    if debug: print("Demon Lord is hit")
-                    HP_Demon_Lord -= attk
-                    if HP_Demon_Lord <= 0:
-                        np_field[player_x, player_y-1] = ' '
-                else:
-                    if debug: print("I hit nothing ...")
-                    break
-                    #return None
+            np_field, exp, HP_Demon_Lord  = strike([player_x, player_y], np_field, np_field[player_x, player_y], attk, exp, HP_Demon_Lord)
             if exp == 3:
                 attk += 1
                 exp = 0

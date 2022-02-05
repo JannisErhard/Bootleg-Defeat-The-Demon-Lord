@@ -10,7 +10,7 @@ def boundscheck(x,y,field):
 def move(position, field, ornt, attk, vert, bag):
         x, y = position[0] + configs[ornt][0], position[1] + configs[ornt][1]
         if boundscheck(x,y,field):
-            if not field[x,y] in '#ED-M':
+            if not field[x,y] in '#ED-M|':
                 if field[x,y] in 'KCH':
                     bag.append(field[x,y])
                 if field[x,y] == 'S':
